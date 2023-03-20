@@ -28,25 +28,24 @@ public class SportsmanDAOTest {
     @Autowired
     private SessionFactory sessionFactory;
 
-//    @Test
+   @Test
     void testSimpleManipulations() {
-        // List<Sportsman> personListAll = (List<Sportsman>) sportsmanDAO.getAll();
-        // assertEquals(6, personListAll.size());
+        List<Sportsman> personListAll = (List<Sportsman>) sportsmanDAO.getAll();
+        assertEquals(4, personListAll.size());
 
-        // List<Sportsman> geraltQuery = sportsmanDAO.getAllPersonByName("Геральт");
-        // assertEquals(1, geraltQuery.size());
-        // assertEquals("Геральт из Ривии", geraltQuery.get(0).getName());
+        List<Sportsman> noname3 = sportsmanDAO.getAllPersonByName("Noname 3");
+        assertEquals(1, noname3.size());
+        assertEquals("Noname 3", noname3.get(0).getName());
 
-        // Sportsman personId3 = sportsmanDAO.getById(3L);
-        // assertEquals(3, personId3.getId());
+        Sportsman noname2 = sportsmanDAO.getById(3L);
+        assertEquals(3, noname2.getId());
 
-        Sportsman personNotExist = sportsmanDAO.getById(100L);
+        Sportsman personNotExist = sportsmanDAO.getById(666L);
         assertNull(personNotExist);
     }
 
     @Test
     void testUpdate() {
-//         TimestampWithTimeZoneJdbcType birth = "2000-05-10 15:00:00+03";
         Timestamp birth = Timestamp.valueOf("2018-11-12 01:02:03.1234");
 
          Sportsman updatePerson = sportsmanDAO.getSinglePersonByName("Noname 2");
@@ -86,8 +85,6 @@ public class SportsmanDAOTest {
                 query1.executeUpdate();
                 NativeQuery query2 = session.createNativeQuery("ALTER SEQUENCE sportsman_sportsmanid_seq RESTART WITH 1;");
                 query2.executeUpdate();
-    //            session.createSQLQuery("TRUNCATE sportsman RESTART IDENTITY CASCADE;").executeUpdate();
-    //            session.createSQLQuery("ALTER SEQUENCE sportsman_sportsman_id_seq RESTART WITH 1;").executeUpdate();
                 session.getTransaction().commit();
         }
     }
