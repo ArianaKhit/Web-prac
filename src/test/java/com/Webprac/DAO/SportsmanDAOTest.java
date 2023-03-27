@@ -1,13 +1,12 @@
 package com.Webprac.DAO;
 
+import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
-import org.hibernate.type.descriptor.jdbc.TimestampWithTimeZoneJdbcType;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.object.SqlQuery;
 import org.springframework.test.context.TestPropertySource;
 import com.Webprac.tables.Sportsman;
 
@@ -33,7 +32,7 @@ public class SportsmanDAOTest {
         List<Sportsman> personListAll = (List<Sportsman>) sportsmanDAO.getAll();
         assertEquals(4, personListAll.size());
 
-        List<Sportsman> noname3 = sportsmanDAO.getAllPersonByName("Noname 3");
+        List<Sportsman> noname3 = sportsmanDAO.getAllByName("Noname 3");
         assertEquals(1, noname3.size());
         assertEquals("Noname 3", noname3.get(0).getName());
 
@@ -42,26 +41,34 @@ public class SportsmanDAOTest {
 
         Sportsman personNotExist = sportsmanDAO.getById(666L);
         assertNull(personNotExist);
+
+        SportsmanDAOInterface.Filter f = new SportsmanDAOInterface.Filter(null, "Hockey", "Nowhere");
+        List<Sportsman> l = sportsmanDAO.getByFilter(f);
+        assertEquals(1, l.size());
+
+        SportsmanDAOInterface.Filter f2 = new SportsmanDAOInterface.Filter("Noname 2", "Football", "France");
+        List<Sportsman> l2 = sportsmanDAO.getByFilter(f2);
+        assertEquals(1, l2.size());
     }
 
     @Test
     void testUpdate() {
         Timestamp birth = Timestamp.valueOf("2018-11-12 01:02:03.1234");
 
-         Sportsman updatePerson = sportsmanDAO.getSinglePersonByName("Noname 2");
+         Sportsman updatePerson = sportsmanDAO.getByName("Noname 2");
          updatePerson.setBirthDate(birth);
          sportsmanDAO.update(updatePerson);
 
-         Sportsman noname2 = sportsmanDAO.getSinglePersonByName("Noname 2");
+         Sportsman noname2 = sportsmanDAO.getByName("Noname 2");
          assertEquals(birth, noname2.getBirthDate());
     }
 
     @Test
     void testDelete() {
-         Sportsman deletePerson = sportsmanDAO.getSinglePersonByName("Noname 1");
+         Sportsman deletePerson = sportsmanDAO.getByName("Noname 1");
          sportsmanDAO.delete(deletePerson);
 
-         Sportsman noname1 = sportsmanDAO.getSinglePersonByName("Noname 1");
+         Sportsman noname1 = sportsmanDAO.getByName("Noname 1");
          assertNull(noname1);
     }
 

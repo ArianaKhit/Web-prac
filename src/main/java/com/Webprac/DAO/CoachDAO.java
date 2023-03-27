@@ -1,6 +1,6 @@
 package com.Webprac.DAO;
 
-import com.Webprac.tables.Sportsman;
+import com.Webprac.tables.Coach;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -13,35 +13,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class SportsmanDAO extends CommonDAO<Sportsman, Long> implements SportsmanDAOInterface {
+public class CoachDAO extends CommonDAO<Coach, Long> implements CoachDAOInterface {
 
-    public SportsmanDAO(){
-        super(Sportsman.class);
+    public CoachDAO(){
+        super(Coach.class);
     }
 
     @Override
-    public List<Sportsman> getAllByName(String personName) {
+    public List<Coach> getAllByName(String personName) {
         try (Session session = sessionFactory.openSession()) {
-            Query<Sportsman> query = session.createQuery("FROM Sportsman WHERE name LIKE :name", Sportsman.class)
+            Query<Coach> query = session.createQuery("FROM Coach WHERE name LIKE :name", Coach.class)
                     .setParameter("name", likeExpr(personName));
             return query.getResultList().size() == 0 ? null : query.getResultList();
         }
     }
 
     @Override
-    public Sportsman getByName(String personName) {
-        List<Sportsman> candidates = this.getAllByName(personName);
+    public Coach getByName(String personName) {
+        List<Coach> candidates = this.getAllByName(personName);
         return candidates == null ? null :
                 candidates.size() == 1 ? candidates.get(0) : null;
     }
 
 
     @Override
-    public List<Sportsman> getByFilter(Filter filter) {
+    public List<Coach> getByFilter(Filter filter) {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<Sportsman> criteriaQuery = builder.createQuery(Sportsman.class);
-            Root<Sportsman> root = criteriaQuery.from(Sportsman.class);
+            CriteriaQuery<Coach> criteriaQuery = builder.createQuery(Coach.class);
+            Root<Coach> root = criteriaQuery.from(Coach.class);
 
             List<Predicate> predicates = new ArrayList<>();
             if (filter.getName() != null)

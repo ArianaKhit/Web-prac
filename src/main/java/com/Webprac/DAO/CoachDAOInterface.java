@@ -1,18 +1,17 @@
 package com.Webprac.DAO;
 
-import com.Webprac.tables.Sportsman;
+import com.Webprac.tables.Coach;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.sql.Timestamp;
 import java.util.List;
 
-public interface SportsmanDAOInterface extends CommonDAOInterface<Sportsman, Long> {
+public interface CoachDAOInterface extends CommonDAOInterface<Coach, Long> {
 
-    List<Sportsman> getAllByName(String personName);
-    Sportsman getByName(String personName);
-    List<Sportsman> getByFilter(Filter filter);
+    List<Coach> getAllByName(String personName);
+    Coach getByName(String personName);
+    List<Coach> getByFilter(Filter filter);
 
 
     @Builder

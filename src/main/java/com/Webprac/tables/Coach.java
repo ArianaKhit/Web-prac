@@ -3,6 +3,8 @@ package com.Webprac.tables;
 import lombok.*;
 
 import jakarta.persistence.*;
+
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
@@ -13,7 +15,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class Coach {
+public class Coach implements CommonEntity<Long>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "coachID")
@@ -28,7 +30,7 @@ public class Coach {
     private String sport;
 
     @Column(name = "birthDate")
-    private Long birthDate;
+    private Timestamp birthDate;
 
     @Column(name = "country")
     @NonNull
