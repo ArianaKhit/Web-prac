@@ -5,6 +5,8 @@ import lombok.*;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -30,7 +32,7 @@ public class Coach implements CommonEntity<Long>{
     private String sport;
 
     @Column(name = "birthDate")
-    private Timestamp birthDate;
+    private LocalDate birthDate;
 
     @Column(name = "country")
     @NonNull

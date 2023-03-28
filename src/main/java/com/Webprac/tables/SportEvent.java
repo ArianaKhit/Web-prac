@@ -1,7 +1,11 @@
 package com.Webprac.tables;
 
+import com.Webprac.jsons.JSONConverter;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.*;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -18,13 +22,13 @@ public class SportEvent implements CommonEntity<Long>{
     @Column(nullable = false, name = "eventID")
     private Long id;
 
-    @Column(nullable = false, name = "sport")
-    @NonNull
-    private String sport;
-
     @Column(nullable = false, name = "title")
     @NonNull
     private String title;
+
+    @Column(nullable = false, name = "sport")
+    @NonNull
+    private String sport;
 
     @Column(name = "tournament")
     private String tournament;
@@ -38,13 +42,16 @@ public class SportEvent implements CommonEntity<Long>{
     private String venue;
 
     @Column(name = "date")
-    private Long date;
+    private LocalDate date;
 
+    @Convert(converter = JSONConverter.class)
     @Column(name = "seats")
-    private String seats;
+    private JsonNode seats;
 
+
+    @Convert(converter = JSONConverter.class)
     @Column(name = "results")
-    private String results;
+    private JsonNode results;
 
     @Override
     public boolean equals(Object o) {

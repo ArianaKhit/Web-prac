@@ -1,5 +1,7 @@
 package com.Webprac.tables;
 
+        import com.Webprac.jsons.JSONConverter;
+        import com.fasterxml.jackson.databind.JsonNode;
         import lombok.*;
         import jakarta.persistence.*;
         import java.util.Objects;
@@ -27,8 +29,9 @@ public class TeamSportsmans {
     @NonNull
     private Sportsman sportsman_id;
 
+    @Convert(converter = JSONConverter.class)
     @Column(name = "dates")
-    private String dates;
+    private JsonNode dates;
 
     @Column(name = "current")
     private Boolean current;
