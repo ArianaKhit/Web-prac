@@ -1,6 +1,5 @@
 package com.Webprac.DAO;
 
-import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
@@ -10,9 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import com.Webprac.tables.Sportsman;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -26,8 +27,10 @@ public class SportsmanDAOTest {
     private SportsmanDAO sportsmanDAO;
     @Autowired
     private SessionFactory sessionFactory;
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH);
 
-   @Test
+
+    @Test
     void testSimpleManipulations() {
         List<Sportsman> personListAll = (List<Sportsman>) sportsmanDAO.getAll();
         assertEquals(4, personListAll.size());
@@ -53,7 +56,7 @@ public class SportsmanDAOTest {
 
     @Test
     void testUpdate() {
-        Timestamp birth = Timestamp.valueOf("2018-11-12 01:02:03.1234");
+        LocalDate birth = LocalDate.parse("12-11-2018", dateFormatter);
 
          Sportsman updatePerson = sportsmanDAO.getByName("Noname 2");
          updatePerson.setBirthDate(birth);
@@ -75,7 +78,8 @@ public class SportsmanDAOTest {
     @BeforeEach
     void beforeEach() {
         List<Sportsman> personList = new ArrayList<>();
-        Timestamp birth = Timestamp.valueOf("2018-11-12 01:02:03.1234");
+        LocalDate birth = LocalDate.parse("12-11-2018", dateFormatter);
+
         personList.add(new Sportsman(1L, "Кто-то Там", "Hockey", birth, "Countryyyy"));
         personList.add(new Sportsman(null, "Noname 1", "Football", birth, "No country"));
         personList.add(new Sportsman(null, "Noname 2", "Football", birth, "France"));

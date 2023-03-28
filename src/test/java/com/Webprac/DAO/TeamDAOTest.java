@@ -1,6 +1,5 @@
 package com.Webprac.DAO;
 
-import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
