@@ -2,7 +2,7 @@ CREATE TABLE Coach (
     coachID     SERIAL PRIMARY KEY,
     name        TEXT,
     sport       TEXT,
-    birthDate   TIMESTAMPTZ,
+    birthDate   DATE,
     country     TEXT
 );
 
@@ -10,7 +10,7 @@ CREATE TABLE Sportsman (
     sportsmanID SERIAL PRIMARY KEY,
     name        TEXT,
     sport       TEXT,
-    birthDate   TIMESTAMPTZ,
+    birthDate   DATE,
     country     TEXT
 );
 
@@ -23,20 +23,20 @@ CREATE TABLE Team (
 
 CREATE TABLE SportEvent (
     eventID     SERIAL PRIMARY KEY,
-    sport       TEXT,
     title       TEXT,
+    sport       TEXT,
     tournament  TEXT,
     description TEXT,
     venue       TEXT,
-    date        TIMESTAMPTZ,
-    seats       JSONB,
-    results     JSONB
+    date        DATE,
+    seats       JSON,
+    results     JSON
 );
 
 CREATE TABLE TeamCoaches (
      coachID     INT,
      teamID      INT,
-     dates       JSONB,
+     dates       JSON,
      PRIMARY KEY (coachID, teamID),
      FOREIGN KEY(coachID) REFERENCES Coach(coachID),
      FOREIGN KEY(teamID) REFERENCES Team(teamID)
@@ -45,7 +45,7 @@ CREATE TABLE TeamCoaches (
 CREATE TABLE SportsmanCoaches (
     coachID     INT,
     sportsmanID INT,
-    dates       JSONB,
+    dates       JSON,
     PRIMARY KEY (coachID, sportsmanID),
     FOREIGN KEY(coachID) REFERENCES Coach(coachID),
     FOREIGN KEY(sportsmanID) REFERENCES Sportsman(sportsmanID)
@@ -54,7 +54,7 @@ CREATE TABLE SportsmanCoaches (
 CREATE TABLE TeamSportsmans (
     teamID      INT,
     sportsmanID INT,
-    dates       JSONB,
+    dates       JSON,
     current     BOOLEAN,
     PRIMARY KEY (teamID,sportsmanID),
     FOREIGN KEY(teamID) REFERENCES Team(teamID),
