@@ -42,8 +42,9 @@ public class EventDAOTest {
         assertEquals(1, noname3.size());
         assertEquals("Ice Show", noname3.get(0).getTitle());
 
-        SportEvent noname2 = eventDAO.getById(3L);
-        assertEquals(3, noname2.getId());
+        SportEvent noname2 = eventDAO.getById(2L);
+        assertEquals(2, noname2.getId());
+        assertNotNull(jsonConverter.convertToDatabaseColumn(noname2.getSeats()));
 
         SportEvent personNotExist = eventDAO.getById(666L);
         assertNull(personNotExist);
@@ -65,7 +66,6 @@ public class EventDAOTest {
         SportEvent stest = eventDAO.getById(1L);
         assertEquals("Hockey Grand Game", stest.getTitle());
         assertNotNull(stest.getSeats());
-
 
         LocalDate dateStart = LocalDate.parse("08-04-2023", dateFormatter);
         LocalDate dateEnd = LocalDate.parse("15-04-2023", dateFormatter);
@@ -96,6 +96,7 @@ public class EventDAOTest {
         String seat = "{\"seatTypes\": [{\"type\": \"Classic\", \"count\": 15, \"price\": 100.99}, {\"type\": \"VIP\", \"count\": 10, \"price\": 200.99}], \"scheme\":\"Type1\", \"seats\":[{\"type\":\"Classic\", \"sector\":\"A\", \"rowNum\":1, \"seatNum\":1, \"occupied\":false},{\"type\":\"Classic\", \"sector\":\"A\", \"rowNum\":1, \"seatNum\":2, \"occupied\":false}]}";
         JsonNode seats = jsonConverter.convertToEntityAttribute(seat);
         JsonNode result = jsonConverter.convertToEntityAttribute("{}");
+        System.out.println(jsonConverter.convertToDatabaseColumn(seats));
 
         eventList.add(new SportEvent(1L, "Hockey Grand Game", "Hockey", "Tour de Ice", "Greatest game of the year", "Moscow, Snow St. 12", date1, seats, result));
         eventList.add(new SportEvent(null, "Football Match", "Football", null, "Greatest game of the year", "Moscow, Snow St. 12", date2, seats, null));

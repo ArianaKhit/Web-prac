@@ -80,10 +80,10 @@ public class SportsmanDAOTest {
         List<Sportsman> personList = new ArrayList<>();
         LocalDate birth = LocalDate.parse("12-11-2018", dateFormatter);
 
-        personList.add(new Sportsman(1L, "Кто-то Там", "Hockey", birth, "Countryyyy"));
-        personList.add(new Sportsman(null, "Noname 1", "Football", birth, "No country"));
-        personList.add(new Sportsman(null, "Noname 2", "Football", birth, "France"));
-        personList.add(new Sportsman(null, "Noname 3", "Hockey", birth, "Nowhere"));
+        personList.add(new Sportsman("Кто-то Там", "Hockey", birth, "Countryyyy"));
+        personList.add(new Sportsman("Noname 1", "Football", birth, "No country"));
+        personList.add(new Sportsman("Noname 2", "Football", birth, "France"));
+        personList.add(new Sportsman("Noname 3", "Hockey", birth, "Nowhere"));
         sportsmanDAO.saveCollection(personList);
     }
 
