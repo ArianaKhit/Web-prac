@@ -27,6 +27,7 @@ public class JSONConverter implements AttributeConverter<JsonNode, String> {
         if (jsonStr == null) {
             return null;
         }
+
         JsonNode jsonNode = null;
         try {
             jsonNode = objectMapper.readTree(jsonStr);
