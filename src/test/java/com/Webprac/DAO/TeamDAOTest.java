@@ -38,7 +38,7 @@ public class TeamDAOTest {
     private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH);
     private JSONConverter jsonConverter = new JSONConverter();
 
-//    @Test
+    @Test
     void testSimpleManipulations() {
         List<Team> teamListAll = (List<Team>) teamDAO.getAll();
         assertEquals(4, teamListAll.size());
@@ -63,7 +63,7 @@ public class TeamDAOTest {
         assertEquals(0, l2.size());
     }
 
-//    @Test
+    @Test
     void testUpdate() {
 
         Team updateTeam = teamDAO.getByName("Spartak");
@@ -71,7 +71,7 @@ public class TeamDAOTest {
         teamDAO.update(updateTeam);
     }
 
-//    @Test
+    @Test
     void testDelete() {
         Team deleteTeam = teamDAO.getByName("Spartak");
         teamDAO.delete(deleteTeam);
@@ -98,6 +98,9 @@ public class TeamDAOTest {
 
         assertEquals(4L, sp.getTeamSportsmans().stream().toList().get(0).getTeam().getId());
         assertEquals(1L, team.getTeamSportsmans().stream().toList().get(0).getSportsman().getId());
+
+        teamDAO.delete(team);
+        assertEquals(0, teamSportsmansDAO.getAll().size());
     }
 
     @BeforeEach
@@ -118,7 +121,7 @@ public class TeamDAOTest {
     }
 
     @BeforeAll
-//    @AfterEach
+    @AfterEach
     void annihilation() {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();

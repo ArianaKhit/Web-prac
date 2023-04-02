@@ -1,6 +1,7 @@
 package com.Webprac.DAO;
 
 import com.Webprac.jsons.JSONConverter;
+import com.Webprac.tables.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
-import com.Webprac.tables.SportEvent;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -29,7 +29,13 @@ public class EventDAOTest {
     @Autowired
     private EventDAO eventDAO;
     @Autowired
+    private SportsmanDAO sportsmanDAO;
+    @Autowired
     private SessionFactory sessionFactory;
+    @Autowired
+    private TeamDAO teamDAO;
+    @Autowired
+    private EventSportsmansDAO eventSportsmansDAO;
     private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH);
     private JSONConverter jsonConverter = new JSONConverter();
 
@@ -87,6 +93,51 @@ public class EventDAOTest {
         assertNull(noname1);
     }
 
+
+    @Test
+    void testAddTeamToEvent() {
+        String datesStr = "{\"dates\" : [{\"start\":\"2008-03-23\", \"end\":\"2009-02-24\"}]}";
+        JsonNode dates = jsonConverter.convertToEntityAttribute(datesStr);
+        System.out.println(jsonConverter.convertToDatabaseColumn(dates));
+
+        SportEvent sportEvent = eventDAO.getById(4L);
+        Team team = teamDAO.getById(1L);
+        EventTeams et = new EventTeams(sportEvent, team);
+
+        sportEvent.getEventTeams().add(et);
+        team.getEventTeams().add(et);
+        teamDAO.update(team);
+        eventDAO.update(sportEvent);
+
+        assertEquals(4L, team.getEventTeams().stream().toList().get(0).getEvent().getId());
+        assertEquals(1L, sportEvent.getEventTeams().stream().toList().get(0).getTeam().getId());
+
+        eventDAO.delete(sportEvent);
+        assertEquals(0, eventSportsmansDAO.getAll().size());
+    }
+
+    @Test
+    void testAddSportsmanToEvent() {
+        String datesStr = "{\"dates\" : [{\"start\":\"2008-03-23\", \"end\":\"2009-02-24\"}]}";
+        JsonNode dates = jsonConverter.convertToEntityAttribute(datesStr);
+        System.out.println(jsonConverter.convertToDatabaseColumn(dates));
+
+        SportEvent sportEvent = eventDAO.getById(4L);
+        Sportsman sp = sportsmanDAO.getById(1L);
+        EventSportsmans es = new EventSportsmans(sportEvent, sp);
+
+        sportEvent.getEventSportsmans().add(es);
+        sp.getEventSportsmans().add(es);
+        sportsmanDAO.update(sp);
+        eventDAO.update(sportEvent);
+
+        assertEquals(4L, sp.getEventSportsmans().stream().toList().get(0).getEvent().getId());
+        assertEquals(1L, sportEvent.getEventSportsmans().stream().toList().get(0).getSportsman().getId());
+
+        eventDAO.delete(sportEvent);
+        assertEquals(0, eventSportsmansDAO.getAll().size());
+    }
+
     @BeforeEach
     void beforeEach() {
         List<SportEvent> eventList = new ArrayList<>();
@@ -98,11 +149,18 @@ public class EventDAOTest {
         JsonNode result = jsonConverter.convertToEntityAttribute("{}");
         System.out.println(jsonConverter.convertToDatabaseColumn(seats));
 
-        eventList.add(new SportEvent(1L, "Hockey Grand Game", "Hockey", "Tour de Ice", "Greatest game of the year", "Moscow, Snow St. 12", date1, seats, result));
-        eventList.add(new SportEvent(null, "Football Match", "Football", null, "Greatest game of the year", "Moscow, Snow St. 12", date2, seats, null));
-        eventList.add(new SportEvent(null, "Home Team Train game", "Volleyball", null, "Greatest game of the year", "Moscow, Snow St. 12", date1, null, null));
-        eventList.add(new SportEvent(null, "Ice Show", "Figure skating", null, "Greatest show of the year", "Moscow, Snow St. 12", date2, seats, null));
+        eventList.add(new SportEvent("Hockey Grand Game", "Hockey", "Tour de Ice", "Greatest game of the year", "Moscow, Snow St. 12", date1, seats, result));
+        eventList.add(new SportEvent("Football Match", "Football", null, "Greatest game of the year", "Moscow, Snow St. 12", date2, seats, null));
+        eventList.add(new SportEvent("Home Team Train game", "Volleyball", null, "Greatest game of the year", "Moscow, Snow St. 12", date1, null, null));
+        eventList.add(new SportEvent("Ice Show", "Figure skating", null, "Greatest show of the year", "Moscow, Snow St. 12", date2, seats, null));
         eventDAO.saveCollection(eventList);
+
+        List<Team> teamList = new ArrayList<>();
+        teamList.add(new Team("Zenit", "Football", "St. Petersburg"));
+        teamList.add(new Team("Rubin", "Football", "Kazan"));
+        teamList.add(new Team("Torpeda", "Hockey", "France"));
+        teamList.add(new Team("Spartak", "Hockey", "Nowhere"));
+        teamDAO.saveCollection(teamList);
     }
 
     @BeforeAll
