@@ -20,14 +20,14 @@ public class SportsmanCoaches {
     @JoinColumn(name = "coachID")
     @ToString.Exclude
     @NonNull
-    private Coach coach_id;
+    private Coach coachID;
 
     @Id
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sportsmanID")
     @ToString.Exclude
     @NonNull
-    private Sportsman sportsman_id;
+    private Sportsman sportsmanID;
 
     @Convert(converter = JSONConverter.class)
     @Column(name = "dates")
@@ -38,8 +38,8 @@ public class SportsmanCoaches {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SportsmanCoaches other = (SportsmanCoaches) o;
-        return Objects.equals(coach_id, other.coach_id)
-                && Objects.equals(sportsman_id, other.sportsman_id)
+        return Objects.equals(coachID, other.coachID)
+                && Objects.equals(sportsmanID, other.sportsmanID)
                 && Objects.equals(dates, other.dates);
     }
 }

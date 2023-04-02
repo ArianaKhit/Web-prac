@@ -2,7 +2,12 @@ package com.Webprac.tables;
 
 import lombok.*;
 import jakarta.persistence.*;
+import org.springframework.data.relational.core.mapping.MappedCollection;
+
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "Team")
@@ -29,6 +34,10 @@ public class Team implements CommonEntity<Long>{
     @Column(name = "country")
     @NonNull
     private String country;
+
+
+    @OneToMany(mappedBy = "team", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    Set<TeamSportsmans> teamSportsmans = new HashSet<TeamSportsmans>();
 
     @Override
     public boolean equals(Object o) {

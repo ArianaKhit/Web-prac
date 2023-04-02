@@ -1,13 +1,20 @@
 package com.Webprac.DAO;
 
+import com.Webprac.jsons.JSONConverter;
+import com.Webprac.tables.Coach;
+import com.Webprac.tables.Sportsman;
 import com.Webprac.tables.Team;
+import com.Webprac.tables.TeamSportsmans;
+import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +41,6 @@ public class TeamDAO extends CommonDAO<Team, Long> implements TeamDAOInterface {
         return candidates == null ? null :
                 candidates.size() == 1 ? candidates.get(0) : null;
     }
-
 
     @Override
     public List<Team> getByFilter(Filter filter) {

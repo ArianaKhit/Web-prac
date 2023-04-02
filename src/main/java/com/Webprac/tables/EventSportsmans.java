@@ -17,21 +17,21 @@ public class EventSportsmans {
     @JoinColumn(name = "eventID")
     @ToString.Exclude
     @NonNull
-    private SportEvent event_id;
+    private SportEvent eventID;
 
     @Id
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sportsmanID")
     @ToString.Exclude
     @NonNull
-    private Sportsman sportsman_id;
+    private Sportsman sportsmanID;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EventSportsmans other = (EventSportsmans) o;
-        return Objects.equals(event_id, other.event_id)
-                && Objects.equals(sportsman_id, other.sportsman_id);
+        return Objects.equals(eventID, other.eventID)
+                && Objects.equals(sportsmanID, other.sportsmanID);
     }
 }

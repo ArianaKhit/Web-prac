@@ -6,8 +6,7 @@ import org.hibernate.type.descriptor.jdbc.TimestampWithTimeZoneJdbcType;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "Sportsman")
@@ -32,11 +31,15 @@ public class Sportsman implements CommonEntity<Long> {
     private String sport;
 
     @Column(name = "birthDate")
+    @NonNull
     private LocalDate birthDate;
 
     @Column(name = "country")
     @NonNull
     private String country;
+
+    @OneToMany(mappedBy = "sportsman", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    Set<TeamSportsmans> teamSportsmans = new HashSet<TeamSportsmans>();
 
     @Override
     public boolean equals(Object o) {

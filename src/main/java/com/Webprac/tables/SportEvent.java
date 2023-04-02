@@ -45,12 +45,12 @@ public class SportEvent implements CommonEntity<Long>{
     private LocalDate date;
 
     @Convert(converter = JSONConverter.class)
-    @Column(name = "seats")
+    @Column(name = "seats", columnDefinition = "string")
     private JsonNode seats;
 
 
     @Convert(converter = JSONConverter.class)
-    @Column(name = "results")
+    @Column(name = "results", columnDefinition = "json")
     private JsonNode results;
 
     @Override

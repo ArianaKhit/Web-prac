@@ -1,10 +1,10 @@
 package com.Webprac.tables;
 
-        import com.Webprac.jsons.JSONConverter;
-        import com.fasterxml.jackson.databind.JsonNode;
-        import lombok.*;
-        import jakarta.persistence.*;
-        import java.util.Objects;
+import com.Webprac.jsons.JSONConverter;
+import com.fasterxml.jackson.databind.JsonNode;
+import lombok.*;
+import jakarta.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "TeamSportsmans")
@@ -14,26 +14,28 @@ package com.Webprac.tables;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class TeamSportsmans {
+public class TeamSportsmans implements CommonEntity<Long> {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, name = "ID")
+    private Long id;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teamID")
-    @ToString.Exclude
     @NonNull
-    private Team team_id;
+    private Team team;
 
-    @Id
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sportsmanID")
-    @ToString.Exclude
     @NonNull
-    private Sportsman sportsman_id;
+    private Sportsman sportsman;
 
     @Convert(converter = JSONConverter.class)
     @Column(name = "dates")
     private JsonNode dates;
 
     @Column(name = "current")
+    @NonNull
     private Boolean current;
 
     @Override
@@ -41,8 +43,9 @@ public class TeamSportsmans {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TeamSportsmans other = (TeamSportsmans) o;
-        return Objects.equals(team_id, other.team_id)
-                && Objects.equals(sportsman_id, other.sportsman_id)
+        return Objects.equals(id, other.id)
+                && Objects.equals(team, other.team)
+                && Objects.equals(sportsman, other.sportsman)
                 && Objects.equals(dates, other.dates)
                 && Objects.equals(current, other.current);
     }

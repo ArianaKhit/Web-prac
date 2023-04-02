@@ -34,46 +34,46 @@ CREATE TABLE SportEvent (
 );
 
 CREATE TABLE TeamCoaches (
+     ID          SERIAL PRIMARY KEY,
      coachID     INT,
      teamID      INT,
      dates       JSON,
-     PRIMARY KEY (coachID, teamID),
      FOREIGN KEY(coachID) REFERENCES Coach(coachID),
      FOREIGN KEY(teamID) REFERENCES Team(teamID)
 );
 
 CREATE TABLE SportsmanCoaches (
+    ID          SERIAL PRIMARY KEY,
     coachID     INT,
     sportsmanID INT,
     dates       JSON,
-    PRIMARY KEY (coachID, sportsmanID),
     FOREIGN KEY(coachID) REFERENCES Coach(coachID),
     FOREIGN KEY(sportsmanID) REFERENCES Sportsman(sportsmanID)
 );
 
 CREATE TABLE TeamSportsmans (
+    ID          SERIAL PRIMARY KEY,
     teamID      INT,
     sportsmanID INT,
     dates       JSON,
     current     BOOLEAN,
-    PRIMARY KEY (teamID,sportsmanID),
     FOREIGN KEY(teamID) REFERENCES Team(teamID),
     FOREIGN KEY(sportsmanID) REFERENCES Sportsman(sportsmanID)
 );
 
 
 CREATE TABLE EventSportsmans (
+    ID          SERIAL PRIMARY KEY,
     eventID     INT,
     sportsmanID INT,
-    PRIMARY KEY (eventID, sportsmanID),
     FOREIGN KEY(eventID) REFERENCES SportEvent(eventID),
     FOREIGN KEY(sportsmanID) REFERENCES Sportsman(sportsmanID)
 );
 
 CREATE TABLE EventTeams (
+    ID          SERIAL PRIMARY KEY,
     eventID     INT,
     teamID      INT,
-    PRIMARY KEY (eventID,teamID),
     FOREIGN KEY(eventID) REFERENCES SportEvent(eventID),
     FOREIGN KEY(teamID) REFERENCES Team(teamID)
 );
