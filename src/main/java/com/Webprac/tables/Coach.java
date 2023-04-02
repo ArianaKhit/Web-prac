@@ -7,7 +7,9 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "Coach")
@@ -32,11 +34,19 @@ public class Coach implements CommonEntity<Long>{
     private String sport;
 
     @Column(name = "birthDate")
+    @NonNull
     private LocalDate birthDate;
 
     @Column(name = "country")
     @NonNull
     private String country;
+
+    @OneToMany(mappedBy = "coach", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    Set<SportsmanCoaches> sportsmanCoaches = new HashSet<SportsmanCoaches>();
+
+    @OneToMany(mappedBy = "coach", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    Set<TeamCoaches> teamCoaches = new HashSet<TeamCoaches>();
+
 
     @Override
     public boolean equals(Object o) {

@@ -41,6 +41,12 @@ public class Sportsman implements CommonEntity<Long> {
     @OneToMany(mappedBy = "sportsman", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     Set<TeamSportsmans> teamSportsmans = new HashSet<TeamSportsmans>();
 
+    @OneToMany(mappedBy = "sportsman", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    Set<SportsmanCoaches> sportsmanCoaches = new HashSet<SportsmanCoaches>();
+
+    @OneToMany(mappedBy = "sportsman", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    Set<EventSportsmans> eventSportsmans = new HashSet<EventSportsmans>();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

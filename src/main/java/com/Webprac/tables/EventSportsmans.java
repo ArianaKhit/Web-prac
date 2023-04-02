@@ -11,27 +11,29 @@ import java.util.Objects;
 @ToString
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class EventSportsmans {
+public class EventSportsmans implements CommonEntity<Long> {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, name = "ID")
+    private Long id;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "eventID")
-    @ToString.Exclude
     @NonNull
-    private SportEvent eventID;
+    private SportEvent event;
 
-    @Id
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sportsmanID")
-    @ToString.Exclude
     @NonNull
-    private Sportsman sportsmanID;
+    private Sportsman sportsman;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EventSportsmans other = (EventSportsmans) o;
-        return Objects.equals(eventID, other.eventID)
-                && Objects.equals(sportsmanID, other.sportsmanID);
+        return Objects.equals(event, other.event)
+                && Objects.equals(sportsman, other.sportsman);
     }
 }

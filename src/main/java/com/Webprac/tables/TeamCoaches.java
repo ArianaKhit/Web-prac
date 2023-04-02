@@ -14,20 +14,22 @@ import java.util.Objects;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class TeamCoaches {
+public class TeamCoaches implements CommonEntity<Long> {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, name = "ID")
+    private Long id;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "coachID")
-    @ToString.Exclude
     @NonNull
-    private Coach coachID;
+    private Coach coach;
 
-    @Id
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teamID")
-    @ToString.Exclude
     @NonNull
-    private Team teamID;
+    private Team team;
 
     @Convert(converter = JSONConverter.class)
     @Column(name = "dates")
@@ -38,8 +40,8 @@ public class TeamCoaches {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TeamCoaches other = (TeamCoaches) o;
-        return Objects.equals(coachID, other.coachID)
-                && Objects.equals(teamID, other.teamID)
+        return Objects.equals(coach, other.coach)
+                && Objects.equals(team, other.team)
                 && Objects.equals(dates, other.dates);
     }
 }
