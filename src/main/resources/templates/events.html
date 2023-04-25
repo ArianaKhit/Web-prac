@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Events</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<div th:replace="general :: page-header"></div>
+
+<div class="indent">
+    <h1>Events</h1>
+    <div class="eventFilters">
+        Filters:
+        <form action="/events" method="get">
+            <input name="title" th:value="${param.title}" placeholder="title"/>
+            <input name="sport" th:value="${param.sport}" placeholder="sport"/>
+            <input name="tournament" th:value="${param.tournament}" placeholder="tournament"/>
+            <input name="venue" th:value="${param.venue}" placeholder="venue"/>
+            <input type="date" id="startDate" name="startDate" th:value="${param.startDate}" placeholder="from"/>
+            <input type="date" id="endDate" name="endDate" th:value="${param.endDate}" placeholder="to"/>
+            <input type="submit" value="Submit"/>
+            <input type="reset" value="Clear"/>
+        </form>
+    </div>
+    <div class="eventInfo">
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Sport</th>
+            <th>Tournament</th>
+            <th>Date</th>
+            <th>Venue</th>
+        </tr>
+
+        <tr th:each="event, iter: ${events}">
+            <td>
+                <a th:text="${event.getTitle()}" th:href="'/event?eventID=' + ${event.getId()}"></a>
+            </td>
+            <td th:text="${event.getSport()}"></td><br>
+            <td th:text="${event.getTournament()}"></td><br>
+            <td th:text="${#temporals.format(event.getDate(), 'HH:mm dd MMMM yyyy')}"></td>
+            <td th:text="${event.getVenue()}"></td><br>
+        </tr>
+    </table>
+    </div>
+    <div th:replace="general :: site-footer"></div>
+</div>
+
+</body>
+</html>
