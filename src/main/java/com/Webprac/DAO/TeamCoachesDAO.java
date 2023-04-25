@@ -16,17 +16,17 @@ public class TeamCoachesDAO extends CommonDAO<TeamCoaches, Long> {
     }
 
 
-    public List<TeamCoaches> getAllByTeam(Long teamID) {
-        try (Session session = sessionFactory.openSession()) {
-            Query<TeamCoaches> query = session.createQuery("FROM TeamCoaches WHERE teamID = :teamID", TeamCoaches.class)
-                    .setParameter("teamID", teamID);
-            return query.getResultList().size() == 0 ? null : query.getResultList();
-        }
-    }
+//    public List<TeamCoaches> getAllByTeam(Long teamID) {
+//        try (Session session = sessionFactory.openSession()) {
+//            Query<TeamCoaches> query = session.createQuery("FROM TeamCoaches WHERE teamID = :teamID", TeamCoaches.class)
+//                    .setParameter("teamID", teamID);
+//            return query.getResultList().size() == 0 ? null : query.getResultList();
+//        }
+//    }
 
-    public TeamCoaches getByTeam(Long teamID) {
-        List<TeamCoaches> candidates = this.getAllByTeam(teamID);
-        return candidates == null ? null :
-                candidates.size() == 1 ? candidates.get(0) : null;
-    }
+//    public TeamCoaches getByTeam(Long teamID) {
+//        List<TeamCoaches> candidates = this.getAllByTeam(teamID);
+//        return candidates == null ? null :
+//                candidates.size() == 1 ? candidates.get(0) : null;
+//    }
 }
