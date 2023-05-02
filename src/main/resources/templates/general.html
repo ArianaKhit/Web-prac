@@ -1,44 +1,49 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
-  <title></title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:wght@100&family=Quicksand|Raleway">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 
 <!--page header-->
-<nav class="navbar navbar-expand-lg navbar-light" th:fragment="page-header" style="background-color: #e3f2fd;">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" id="rootLink" href="/">Main page</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="persons" th:href="@{persons}">Persons</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="events" th:href="@{events}">Events</a>
-      </li>
-    </ul>
-  </div>
+<nav class="header" th:fragment="page-header">
+    <div class="main-menu">
+        <ul>
+            <li class="main-menu-item active">
+                <a href="/">Main page</a>
+            </li>
+            <li class="main-menu-item">
+                <a th:href="@{events}">Events</a>
+            </li>
+            <li class="main-menu-item">
+                <a th:href="@{teams}">Teams</a>
+            </li>
+            <li class="main-menu-item">
+                <a th:href="@{persons}">Sportsmen</a>
+            </li>
+            <li class="main-menu-item">
+                <a th:href="@{persons}">Coaches</a>
+            </li>
+            <li class="main-menu-item">
+                <a href="https://github.com/ArianaKhit/Web-prac">GitHub</a>
+            </li>
+        </ul>
+    </div>
 </nav>
 <!--end of page header-->
 
-
-<div th:fragment="site-footer" class="fixed-bottom indent">
-  <p>
-    Web-prac project
-    <br>
-    Ariana Khitrova, 2023
-    <br>
-  </p>
+<div class="footer" th:fragment="site-footer">
+    <div class="footer-container">
+        <p>
+            Web technologies practical course. CMC MSU.
+            <br>
+            Ariana Khitrova, 2023
+            <br>
+        </p>
+    </div>
 </div>
+
 </body>
 </html>

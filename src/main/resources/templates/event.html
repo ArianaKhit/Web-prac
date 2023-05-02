@@ -2,17 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Event</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:wght@100&family=Quicksand|Raleway">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <style>
-        .indent {
-            margin-left: 30px;
-            margin-right: 30px;
-            margin-top: 20px;
-        }
-    </style>
 </head>
 <body>
 
@@ -27,8 +19,13 @@
         <span th:text="${#temporals.format(event.getDate(), 'HH:mm dd MMMM yyyy')}"></span>
 
     </div>
-    <div th:replace="general :: site-footer"></div>
+    <form method="post" action="/delete_event">
+        <input type="hidden" name="eventID" th:value="${event.getId()}"/>
+        <button id="deleteEventButton" type="submit">Удалить</button>
+    </form>
 </div>
+
+<div th:replace="general :: site-footer"></div>
 
 </body>
 </html>

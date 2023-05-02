@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Add Event</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:wght@100&family=Quicksand|Raleway">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<div th:replace="general :: page-header"></div>
+
+<div class="indent">
+    <div class="eventDesc">
+        <form th:action="@{/add_new_event}" method="post">
+            <input name="title" placeholder="title"/>
+            <input name="sport" placeholder="sport"/>
+            <input name="tournament" placeholder="tournament"/>
+            <input name="description" placeholder="description"/>
+            <input name="venue" placeholder="venue"/>
+            <input type="date" name="date" placeholder="date"/>
+            <input name="seats"  placeholder="seats"/>
+            <input name="results"  placeholder="results"/>
+            <input type="submit" value="Submit"/>
+        </form>
+    </div>
+</div>
+    
+<div th:replace="general :: site-footer"></div>
+
+</body>
+</html>
