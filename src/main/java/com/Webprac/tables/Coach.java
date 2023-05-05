@@ -41,6 +41,9 @@ public class Coach implements CommonEntity<Long>{
     @NonNull
     private String country;
 
+    @Column(name = "description")
+    private String description;
+
     @OneToMany(mappedBy = "coach", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     Set<SportsmanCoaches> sportsmanCoaches = new HashSet<SportsmanCoaches>();
 
