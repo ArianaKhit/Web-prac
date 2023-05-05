@@ -3,7 +3,8 @@ CREATE TABLE Coach (
     name        TEXT,
     sport       TEXT,
     birthDate   DATE,
-    country     TEXT
+    country     TEXT,
+    description TEXT
 );
 
 CREATE TABLE Sportsman (
@@ -11,14 +12,16 @@ CREATE TABLE Sportsman (
     name        TEXT,
     sport       TEXT,
     birthDate   DATE,
-    country     TEXT
+    country     TEXT,
+    description TEXT
 );
 
 CREATE TABLE Team (
    teamID       SERIAL PRIMARY KEY,
    teamName     TEXT,
    sport        TEXT,
-   country      TEXT
+   country      TEXT,
+   description  TEXT
 );
 
 CREATE TABLE SportEvent (
@@ -39,7 +42,8 @@ CREATE TABLE TeamCoaches (
      teamID      INT,
      dates       JSON,
      FOREIGN KEY(coachID) REFERENCES Coach(coachID),
-     FOREIGN KEY(teamID) REFERENCES Team(teamID)
+     FOREIGN KEY(teamID) REFERENCES Team(teamID),
+     UNIQUE (coachID, teamID)
 );
 
 CREATE TABLE SportsmanCoaches (
@@ -48,7 +52,8 @@ CREATE TABLE SportsmanCoaches (
     sportsmanID INT,
     dates       JSON,
     FOREIGN KEY(coachID) REFERENCES Coach(coachID),
-    FOREIGN KEY(sportsmanID) REFERENCES Sportsman(sportsmanID)
+    FOREIGN KEY(sportsmanID) REFERENCES Sportsman(sportsmanID),
+    UNIQUE (coachID, sportsmanID)
 );
 
 CREATE TABLE TeamSportsmans (
@@ -58,7 +63,8 @@ CREATE TABLE TeamSportsmans (
     dates       JSON,
     current     BOOLEAN,
     FOREIGN KEY(teamID) REFERENCES Team(teamID),
-    FOREIGN KEY(sportsmanID) REFERENCES Sportsman(sportsmanID)
+    FOREIGN KEY(sportsmanID) REFERENCES Sportsman(sportsmanID),
+    UNIQUE (teamID, sportsmanID)
 );
 
 
@@ -67,7 +73,8 @@ CREATE TABLE EventSportsmans (
     eventID     INT,
     sportsmanID INT,
     FOREIGN KEY(eventID) REFERENCES SportEvent(eventID),
-    FOREIGN KEY(sportsmanID) REFERENCES Sportsman(sportsmanID)
+    FOREIGN KEY(sportsmanID) REFERENCES Sportsman(sportsmanID),
+    UNIQUE (eventID, sportsmanID)
 );
 
 CREATE TABLE EventTeams (
@@ -75,5 +82,6 @@ CREATE TABLE EventTeams (
     eventID     INT,
     teamID      INT,
     FOREIGN KEY(eventID) REFERENCES SportEvent(eventID),
-    FOREIGN KEY(teamID) REFERENCES Team(teamID)
+    FOREIGN KEY(teamID) REFERENCES Team(teamID),
+    UNIQUE (eventID, teamID)
 );
