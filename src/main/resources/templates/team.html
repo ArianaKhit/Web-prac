@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Team</title>
+  <link rel="stylesheet" th:href="@{/style.css}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:wght@100&family=Quicksand|Raleway">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<div th:replace="general :: page-header"></div>
+
+<div class="indent">
+  <div class="desc">
+    <h1 th:text="${team.getTeamName()}"></h1>
+    <span th:text="${team.getSport()}"></span><br>
+    <span th:text="${team.getCountry()}"></span><br>
+    <span th:text="${team.getDescription()}"></span><br>
+  </div>
+  <div>
+    <h2>Participants:</h2>
+    <table>
+      <tr>
+        <th>Name</th><th>Country</th><th></th>
+      </tr>
+
+      <tr th:each="pers, iter: ${t_sportsmen}">
+        <td>
+          <a th:text="${pers?.getSportsman()?.getName()}" th:href="@{/person(type='sportsman',personID=${pers?.getSportsman()?.getId()})}"></a>
+        </td>
+        <td th:text="${pers?.getSportsman()?.getCountry()}"></td><br>
+        <td>
+          <a th:text="'delete'" th:href="@{/del_pers_from_team(teamID=${param.teamID},personID=${pers?.getSportsman()?.getId()})}"></a>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <a th:href="'/persons?type=sportsman&teamID=' + ${team.getId()}">Add sportsman to team</a>
+
+  <div>
+    <h2>Coaches:</h2>
+    <table>
+      <tr>
+        <th>Name</th><th>Country</th>
+      </tr>
+      <tr th:each="pers, iter: ${t_coaches}">
+        <td>
+          <a th:text="${pers?.getCoach()?.getName()}" th:href="@{/person(type='coach',personID=${pers?.getCoach()?.getId()})}"></a>
+        </td>
+        <td th:text="${pers?.getCoach()?.getCountry()}"></td>
+      </tr>
+    </table>
+  </div>
+
+  <form method="post" action="/delete_team">
+    <input type="hidden" name="teamID" th:value="${team.getId()}"/>
+    <button type="submit">Delete</button>
+  </form>
+
+  <a text="Edit" th:href="'/editteam?teamID=' + ${team.getId()}">Edit</a>
+</div>
+
+<div th:replace="general :: site-footer"></div>
+
+</body>
+</html>

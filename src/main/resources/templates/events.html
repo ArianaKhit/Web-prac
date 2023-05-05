@@ -12,7 +12,7 @@
 
 <div class="indent">
     <h1>Events</h1>
-    <div class="eventFilters">
+    <div class="filters">
         Filters:
         <form action="/events" method="get">
             <input name="title" th:value="${param.title}" placeholder="title"/>
@@ -26,7 +26,7 @@
     </div>
     <a id="addEvent" th:href="'/addevent'">Add event</a>
 
-    <div class="eventInfo container">
+    <div class="info container">
     <table>
         <tr>
             <th>Title</th>
@@ -40,10 +40,10 @@
             <td>
                 <a th:text="${event.getTitle()}" th:href="'/event?eventID=' + ${event.getId()}"></a>
             </td>
-            <td th:text="${event.getSport()}"></td><br>
-            <td th:text="${event.getTournament()}"></td><br>
+            <td th:text="${event.getSport()}"></td>
+            <td th:text="${event.getTournament()}"></td>
             <td th:text="${#temporals.format(event.getDate(), 'dd MMMM yyyy')}"></td>
-            <td th:text="${event.getVenue()}"></td><br>
+            <td th:text="${event.getVenue()}"></td>
         </tr>
     </table>
     </div>

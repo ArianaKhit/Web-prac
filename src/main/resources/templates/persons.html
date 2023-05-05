@@ -13,9 +13,15 @@
 
 <div class="indent">
     <h1>Persons</h1>
-    <div class="personFilters">
+    <div class="filters">
         Filters:
         <form action="/persons" method="get">
+            <div th:if="${param.eventID != null}">
+                <input name="eventID" type="hidden" th:value="${param.eventID}"/>
+            </div>
+            <div th:if="${param.coachID != null}">
+                <input name="coachID" type="hidden" th:value="${param.coachID}"/>
+            </div>
             <input name="type" type="hidden" th:value="${param.type}"/>
             <input name="name" th:value="${param.name}" placeholder="name"/>
             <input name="sport" th:value="${param.sport}" placeholder="sport"/>
@@ -25,13 +31,16 @@
     </div>
     <a th:href="@{/addperson(type=${param.type})}">Add person</a>
 
-    <div class="personInfo">
+    <div class="info">
         <table>
             <tr>
                 <th>Name</th>
                 <th>Sport</th>
                 <th>Country</th>
                 <th>Date of birth</th>
+                <th th:if="${param.eventID != null}">Add to event</th>
+                <th th:if="${param.coachID != null}">Add to coach</th>
+                <th th:if="${param.teamID != null}">Add to team</th>
             </tr>
 
             <tr th:each="person, iter: ${persons}">
@@ -41,6 +50,15 @@
                 <td th:text="${person.getSport()}"></td><br>
                 <td th:text="${person.getCountry()}"></td><br>
                 <td th:text="${#temporals.format(person.getBirthDate(), 'dd MMMM yyyy')}"></td>
+                <td th:if="${param.eventID != null}">
+                    <a th:text="'Add'" th:href="@{/add_pers_to_event(type=${param.type},eventID=${param.eventID},personID=${person.getId()})}"></a>
+                </td>
+                <td th:if="${param.coachID != null}">
+                    <a th:text="'Add'" th:href="@{/add_pers_to_coach(type=${param.type},coachID=${param.coachID},personID=${person.getId()})}"></a>
+                </td>
+                <td th:if="${param.teamID != null}">
+                    <a th:text="'Add'" th:href="@{/add_pers_to_team(type=${param.type},teamID=${param.teamID},personID=${person.getId()})}"></a>
+                </td>
             </tr>
         </table>
     </div>

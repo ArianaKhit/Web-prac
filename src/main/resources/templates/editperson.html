@@ -11,7 +11,7 @@
 <div th:replace="general :: page-header"></div>
 
 <div class="indent">
-  <div class="personDesc">
+  <div class="desc">
     <form th:action="@{/edit_person}" method="post">
       <input type="hidden" name="personID" th:value="${person.getId()}"/>
       <input type="hidden" name="type" th:value="${param.type}"/>
@@ -19,6 +19,7 @@
       <input name="sport" th:value="${person.getSport()}" text="Sport" placeholder="sport"/>
       <input name="country" th:value="${person.getCountry()}" text="Country" placeholder="country"/>
       <input type="date" name="birthdate" th:value="${person.getBirthDate()}" text="Date of birth" placeholder="date of birth"/>
+      <input name="description" th:value="${person.getDescription()}" text="Description" placeholder="description"/>
       <input type="submit" value="Submit"/>
     </form>
   </div>

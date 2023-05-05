@@ -11,7 +11,7 @@
 <div th:replace="general :: page-header"></div>
 
 <div class="indent">
-    <div class="eventDesc">
+    <div class="desc">
         <h4 th:text="${event.getTitle()}"></h4>
         <span th:text="${event.getSport()}"></span><br>
         <span th:text="${event.getTournament()}"></span><br>
@@ -19,12 +19,58 @@
         <span th:text="${event.getVenue()}"></span><br>
         <span th:text="${#temporals.format(event.getDate(), 'dd MMMM yyyy')}"></span>
     </div>
+    <div>
+        Participants:<br>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Country</th>
+                <th></th>
+            </tr>
+
+            <tr th:each="pers, iter: ${e_sportsmen}">
+                <td>
+                    <a th:text="${pers?.getSportsman()?.getName()}" th:href="@{/person(type='sportsman',personID=${pers?.getSportsman()?.getId()})}"></a>
+                </td>
+                <td th:text="${pers?.getSportsman()?.getCountry()}"></td><br>
+                <td>
+                    <a th:text="'delete'" th:href="@{/del_pers_from_event(type='sportsman',eventID=${param.eventID},personID=${pers?.getSportsman()?.getId()})}"></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <a th:href="'/persons?type=sportsman&eventID=' + ${event.getId()}">Add sportsman to event</a>
+
+    <div>
+        Participanting teams:<br>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Country</th>
+                <th></th>
+            </tr>
+
+            <tr th:each="team, iter: ${e_teams}">
+                <td>
+                    <a th:text="${team?.getTeam()?.getTeamName()}" th:href="@{/team(teamID=${team?.getTeam()?.getId()})}"></a>
+                </td>
+                <td th:text="${team?.getTeam()?.getCountry()}"></td><br>
+                <td>
+                    <a th:text="'delete'" th:href="@{/del_team_from_event(eventID=${param.eventID},teamID=${team?.getTeam()?.getId()})}"></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <a th:href="'/teams?&eventID=' + ${event.getId()}">Add team to event</a>
+
     <form method="post" action="/delete_event">
         <input type="hidden" name="eventID" th:value="${event.getId()}"/>
         <button id="deleteEventButton" type="submit">Delete</button>
     </form>
 
-    <a text="Редактировать" th:href="'/editevent?eventID=' + ${event.getId()}">Edit</a>
+    <a text="Edit" th:href="'/editevent?eventID=' + ${event.getId()}">Edit</a>
 </div>
 
 <div th:replace="general :: site-footer"></div>

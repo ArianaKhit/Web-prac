@@ -11,11 +11,12 @@
 <div th:replace="general :: page-header"></div>
 
 <div class="indent">
-  <div class="personDesc">
-    <h4 th:text="${person.getName()}"></h4>
+  <div class="desc">
+    <h1 th:text="${person.getName()}"></h1>
     <span th:text="${person.getSport()}"></span><br>
     <span th:text="${person.getCountry()}"></span><br>
-    <span th:text="${#temporals.format(person.getBirthDate(), 'dd MMMM yyyy')}"></span>
+    <span th:text="${#temporals.format(person.getBirthDate(), 'dd MMMM yyyy')}"></span><br>
+    <span th:text="${person.getDescription()}"></span><br>
 
   </div>
   <form method="post" action="/delete_person">
@@ -24,7 +25,60 @@
     <button id="deletePersonButton" type="submit">Delete</button>
   </form>
 
-  <a text="Редактировать" th:href="@{/editperson(type=${param.type},personID=${person.getId()})}">Edit</a>
+  <a text="Edit" th:href="@{/editperson(type=${param.type},personID=${person.getId()})}">Edit</a>
+
+
+  <div th:if="${#strings.toString(param.type)} == 'coach'">
+    <h2>Sportsmans:</h2>
+    <table>
+      <tr>
+        <th>Name</th><th>Country</th><th></th>
+      </tr>
+      <tr th:each="pers, iter: ${c_sportsmen}">
+        <td>
+          <a th:text="${pers?.getSportsman()?.getName()}" th:href="@{/person(type='sportsman',personID=${pers?.getSportsman()?.getId()})}"></a>
+        </td>
+        <td th:text="${pers?.getSportsman()?.getCountry()}"></td>
+        <td>
+          <a th:text="'delete'" th:href="@{/del_pers_from_coach(coachID=${person.getId()},personID=${pers?.getSportsman()?.getId()})}"></a>
+        </td>
+      </tr>
+    </table>
+    <a th:href="'/persons?type=sportsman&coachID=' + ${person.getId()}">Add sportsman to coach</a>
+
+    <h2>Teams:</h2>
+    <table>
+      <tr>
+        <th>Name</th><th>Country</th><th></th>
+      </tr>
+      <tr th:each="team, iter: ${c_teams}">
+        <td>
+          <a th:text="${team?.getTeam()?.getTeamName()}" th:href="@{/team(teamID=${team?.getTeam()?.getId()})}"></a>
+        </td>
+        <td th:text="${team?.getTeam()?.getCountry()}"></td>
+        <td>
+          <a th:text="'delete'" th:href="@{/del_team_from_coach(coachID=${person.getId()},teamID=${team?.getTeam()?.getId()})}"></a>
+        </td>
+      </tr>
+    </table>
+    <a th:href="'/teams?&coachID=' + ${person.getId()}">Add team to coach</a>
+  </div>
+
+  <div th:if="${#strings.toString(param.type)} == 'sportsman'">
+    <h2>Coaches:</h2>
+    <table>
+      <tr>
+        <th>Name</th><th>Country</th>
+      </tr>
+      <tr th:each="pers, iter: ${c_sportsmen}">
+        <td>
+          <a th:text="${pers?.getCoach()?.getName()}" th:href="@{/person(type='coach',personID=${pers?.getCoach()?.getId()})}"></a>
+        </td>
+        <td th:text="${pers?.getCoach()?.getCountry()}"></td>
+      </tr>
+    </table>
+  </div>
+
 </div>
 
 <div th:replace="general :: site-footer"></div>

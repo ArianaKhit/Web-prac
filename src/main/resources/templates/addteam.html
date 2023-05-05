@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>Add Person</title>
+  <title>Add Team</title>
   <link rel="stylesheet" th:href="@{/style.css}">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:wght@100&family=Quicksand|Raleway">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -12,12 +12,11 @@
 
 <div class="indent">
   <div class="desc">
-    <form th:action="@{/add_new_person}" method="post">
-      <input type="hidden" name="type" th:value="${param.type}"/>
-      <input name="name" placeholder="name"/>
+    <form th:action="@{/add_new_team}" method="post">
+      <input name="teamname" placeholder="teamname"/>
       <input name="sport" placeholder="sport"/>
       <input name="country" placeholder="country"/>
-      <input type="date" name="birthday" placeholder="date of birth"/>
+      <input name="description" placeholder="description"/>
       <input type="submit" value="Submit"/>
     </form>
   </div>

@@ -1,9 +1,8 @@
 package com.Webprac.controllers;
 
-import com.Webprac.DAO.EventDAO;
-import com.Webprac.DAO.EventDAOInterface;
+import com.Webprac.DAO.*;
 import com.Webprac.jsons.JSONConverter;
-import com.Webprac.tables.SportEvent;
+import com.Webprac.tables.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +11,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
+import java.util.function.Predicate;
 
 @Controller
 public class EventsController {
     @Autowired
     private final EventDAO eventDAO = new EventDAO();
+    @Autowired
+    private final SportsmanDAO sportsmanDAO = new SportsmanDAO();
+    @Autowired
+    private final TeamDAO teamDAO = new TeamDAO();
+    @Autowired
+    private final EventSportsmansDAO eventSportsmansDAO = new EventSportsmansDAO();
+    @Autowired
+    private final EventTeamsDAO eventTeamsDAO = new EventTeamsDAO();
 
     @GetMapping("/event")
     public String eventPage(@RequestParam(name="eventID") Long eventID, Model model) {
@@ -26,8 +35,12 @@ public class EventsController {
             return "error";
         }
 
+        Collection<EventSportsmans> e_sportsmen = event.getEventSportsmans();
+        Collection<EventTeams> e_teams = event.getEventTeams();
         model.addAttribute("event", event);
         model.addAttribute("eventDAO", eventDAO);
+        model.addAttribute("e_sportsmen", e_sportsmen);
+        model.addAttribute("e_teams", e_teams);
         return "event";
     }
 
@@ -120,5 +133,53 @@ public class EventsController {
         model.addAttribute("event", event);
         model.addAttribute("eventDAO", eventDAO);
         return "editevent";
+    }
+
+
+    @GetMapping(value = "add_pers_to_event")
+    public String addpers2event(@RequestParam(name="eventID") Long eventID,
+                            @RequestParam(name="personID") Long personID,
+                            @RequestParam(name="type") String type,
+                            Model model) {
+        SportEvent event = eventDAO.getById(eventID);
+        Sportsman sportsman = sportsmanDAO.getById(personID);
+        eventSportsmansDAO.save(new EventSportsmans(event, sportsman));
+        return "redirect:/event?eventID=" + eventID.toString();
+    }
+
+    @GetMapping(value = "del_pers_from_event")
+    public String delpersfromevent(@RequestParam(name="eventID") Long eventID,
+                            @RequestParam(name="personID") Long personID,
+                            @RequestParam(name="type") String type,
+                            Model model) {
+        EventSportsmans es = eventSportsmansDAO.getByIDs(eventID, personID).get(0);
+        if (es == null) {
+            return "error";
+        }
+        eventSportsmansDAO.deleteById(es.getId());
+        return "redirect:/event?eventID=" + eventID.toString();
+    }
+
+
+    @GetMapping(value = "add_team_to_event")
+    public String addteam2event(@RequestParam(name="eventID") Long eventID,
+                                @RequestParam(name="teamID") Long teamID,
+                                Model model) {
+        SportEvent event = eventDAO.getById(eventID);
+        Team team = teamDAO.getById(teamID);
+        eventTeamsDAO.save(new EventTeams(event, team));
+        return "redirect:/event?eventID=" + eventID.toString();
+    }
+
+    @GetMapping(value = "del_team_from_event")
+    public String delteamfromevent(@RequestParam(name="eventID") Long eventID,
+                                   @RequestParam(name="teamID") Long teamID,
+                                   Model model) {
+        EventTeams et = eventTeamsDAO.getByIDs(eventID, teamID).get(0);
+        if (et == null) {
+            return "error";
+        }
+        eventTeamsDAO.deleteById(et.getId());
+        return "redirect:/event?eventID=" + eventID.toString();
     }
 }
