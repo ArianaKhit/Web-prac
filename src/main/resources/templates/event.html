@@ -15,14 +15,16 @@
         <h4 th:text="${event.getTitle()}"></h4>
         <span th:text="${event.getSport()}"></span><br>
         <span th:text="${event.getTournament()}"></span><br>
+        <span th:text="${event.getDescription()}"></span><br>
         <span th:text="${event.getVenue()}"></span><br>
-        <span th:text="${#temporals.format(event.getDate(), 'HH:mm dd MMMM yyyy')}"></span>
-
+        <span th:text="${#temporals.format(event.getDate(), 'dd MMMM yyyy')}"></span>
     </div>
     <form method="post" action="/delete_event">
         <input type="hidden" name="eventID" th:value="${event.getId()}"/>
-        <button id="deleteEventButton" type="submit">Удалить</button>
+        <button id="deleteEventButton" type="submit">Delete</button>
     </form>
+
+    <a text="Редактировать" th:href="'/editevent?eventID=' + ${event.getId()}">Edit</a>
 </div>
 
 <div th:replace="general :: site-footer"></div>

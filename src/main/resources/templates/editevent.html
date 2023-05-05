@@ -12,11 +12,18 @@
 
 <div class="indent">
     <div class="eventDesc">
-        <h4 th:text="${event.getTitle()}"></h4>
-        <span th:text="${event.getSport()}"></span><br>
-        <span th:text="${event.getTournament()}"></span><br>
-        <span th:text="${event.getVenue()}"></span><br>
-        <span th:text="${#temporals.format(event.getDate(), 'HH:mm dd MMMM yyyy')}"></span>
+        <form th:action="@{/edit_event}" method="post">
+            <input type="hidden" name="eventID" th:value="${event.getId()}"/>
+            <input name="title" th:value="${event.getTitle()}" text="Title" placeholder="title"/>
+            <input name="sport" th:value="${event.getSport()}" text="Sport" placeholder="sport"/>
+            <input name="tournament" th:value="${event.getTournament()}" text="Tournament" placeholder="tournament"/>
+            <input name="description" th:value="${event.getDescription()}" text="Description" placeholder="description"/>
+            <input name="venue" th:value="${event.getVenue()}" text="Venue" placeholder="venue"/>
+            <input type="date" name="date" th:value="${event.getDate()}" text="Date" placeholder="date"/>
+            <input name="seats"  th:value="${event.getSeats()?.toString()}" text="Seats" placeholder="seats"/>
+            <input name="results"  th:value="${event.getResults()?.toString()}" text="Results" placeholder="results"/>
+            <input type="submit" value="Submit"/>
+        </form>
     </div>
 </div>
 

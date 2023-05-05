@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Edit Person</title>
+  <link rel="stylesheet" th:href="@{/style.css}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:wght@100&family=Quicksand|Raleway">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<div th:replace="general :: page-header"></div>
+
+<div class="indent">
+  <div class="personDesc">
+    <form th:action="@{/edit_person}" method="post">
+      <input type="hidden" name="personID" th:value="${person.getId()}"/>
+      <input type="hidden" name="type" th:value="${param.type}"/>
+      <input name="name" th:value="${person.getName()}" text="Name" placeholder="name"/>
+      <input name="sport" th:value="${person.getSport()}" text="Sport" placeholder="sport"/>
+      <input name="country" th:value="${person.getCountry()}" text="Country" placeholder="country"/>
+      <input type="date" name="birthdate" th:value="${person.getBirthDate()}" text="Date of birth" placeholder="date of birth"/>
+      <input type="submit" value="Submit"/>
+    </form>
+  </div>
+</div>
+
+<div th:replace="general :: site-footer"></div>
+
+</body>
+</html>

@@ -7,14 +7,4 @@ public class IndexController {
     public String index() {
         return "index";
     }
-
-    @RequestMapping(value = "/persons" )
-    public String allPersons() {
-        return "persons";
-    }
-
-//    @RequestMapping(value = "/events")
-//    public String listEvents() {
-//        return "events";
-//    }
 }

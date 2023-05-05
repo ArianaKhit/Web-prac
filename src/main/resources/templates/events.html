@@ -22,12 +22,11 @@
             <input name="startDate" type="date" id="startDate" th:value="${param.startDate}" placeholder="from"/>
             <input name="endDate" type="date" id="endDate" th:value="${param.endDate}" placeholder="to"/>
             <input type="submit" value="Submit"/>
-            <input type="reset" value="Clear"/>
         </form>
     </div>
     <a id="addEvent" th:href="'/addevent'">Add event</a>
 
-    <div class="eventInfo">
+    <div class="eventInfo container">
     <table>
         <tr>
             <th>Title</th>
@@ -43,7 +42,7 @@
             </td>
             <td th:text="${event.getSport()}"></td><br>
             <td th:text="${event.getTournament()}"></td><br>
-            <td th:text="${#temporals.format(event.getDate(), 'HH:mm dd MMMM yyyy')}"></td>
+            <td th:text="${#temporals.format(event.getDate(), 'dd MMMM yyyy')}"></td>
             <td th:text="${event.getVenue()}"></td><br>
         </tr>
     </table>

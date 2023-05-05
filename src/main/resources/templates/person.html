@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Person</title>
+  <link rel="stylesheet" th:href="@{/style.css}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:wght@100&family=Quicksand|Raleway">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<div th:replace="general :: page-header"></div>
+
+<div class="indent">
+  <div class="personDesc">
+    <h4 th:text="${person.getName()}"></h4>
+    <span th:text="${person.getSport()}"></span><br>
+    <span th:text="${person.getCountry()}"></span><br>
+    <span th:text="${#temporals.format(person.getBirthDate(), 'dd MMMM yyyy')}"></span>
+
+  </div>
+  <form method="post" action="/delete_person">
+    <input type="hidden" name="personID" th:value="${person.getId()}"/>
+    <input type="hidden" name="type" th:value="${param.type}"/>
+    <button id="deletePersonButton" type="submit">Delete</button>
+  </form>
+
+  <a text="Редактировать" th:href="@{/editperson(type=${param.type},personID=${person.getId()})}">Edit</a>
+</div>
+
+<div th:replace="general :: site-footer"></div>
+
+</body>
+</html>
