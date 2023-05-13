@@ -8,48 +8,54 @@
 </head>
 <body>
 
-<div th:replace="general :: page-header"></div>
+<div th:replace="~{general :: page-header}"></div>
 
 <div class="indent">
     <h1>Events</h1>
+    <a id="addEvent" class="button addbtn" th:href="'/addevent'">Add event</a>
     <div class="filters">
-        Filters:
         <form action="/events" method="get">
-            <input name="title" th:value="${param.title}" placeholder="title"/>
-            <input name="sport" th:value="${param.sport}" placeholder="sport"/>
-            <input name="tournament" th:value="${param.tournament}" placeholder="tournament"/>
-            <input name="venue" th:value="${param.venue}" placeholder="venue"/>
-            <input name="startDate" type="date" id="startDate" th:value="${param.startDate}" placeholder="from"/>
-            <input name="endDate" type="date" id="endDate" th:value="${param.endDate}" placeholder="to"/>
-            <input type="submit" value="Submit"/>
+            <label class="input-label">Title</label>
+            <input name="title" th:value="${param.title}"/>
+            <label class="input-label">Sport</label>
+            <input name="sport" th:value="${param.sport}"/>
+            <label class="input-label">Tournament</label>
+            <input name="tournament" th:value="${param.tournament}"/>
+            <label class="input-label">Venue</label>
+            <input name="venue" th:value="${param.venue}"/>
+            <label class="input-label">From</label>
+            <input name="startDate" type="date" th:value="${param.startDate}"/>
+            <label class="input-label">To</label>
+            <input name="endDate" type="date" th:value="${param.endDate}"/>
+            <input type="submit" class="button searchbtn" value="Search"/>
         </form>
     </div>
-    <a id="addEvent" th:href="'/addevent'">Add event</a>
 
     <div class="info container">
     <table>
-        <tr>
-            <th>Title</th>
-            <th>Sport</th>
-            <th>Tournament</th>
-            <th>Date</th>
-            <th>Venue</th>
-        </tr>
-
-        <tr th:each="event, iter: ${events}">
-            <td>
-                <a th:text="${event.getTitle()}" th:href="'/event?eventID=' + ${event.getId()}"></a>
-            </td>
-            <td th:text="${event.getSport()}"></td>
-            <td th:text="${event.getTournament()}"></td>
-            <td th:text="${#temporals.format(event.getDate(), 'dd MMMM yyyy')}"></td>
-            <td th:text="${event.getVenue()}"></td>
-        </tr>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Sport</th>
+                <th>Tournament</th>
+                <th>Date</th>
+                <th>Venue</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="event, iter: ${events}" th:onclick="'location.href=\'/event?eventID=' + ${event.getId()}+'\''">
+                <td th:text="${event.getTitle()}"></td>
+                <td th:text="${event.getSport()}"></td>
+                <td th:text="${event.getTournament()}"></td>
+                <td th:text="${#temporals.format(event.getDate(), 'dd MMMM yyyy')}"></td>
+                <td th:text="${event.getVenue()}"></td>
+            </tr>
+        </tbody>
     </table>
     </div>
 </div>
     
-<div th:replace="general :: site-footer"></div>
+<div th:replace="~{general :: site-footer}"></div>
 
 </body>
 </html>

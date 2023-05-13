@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<div th:replace="general :: page-header"> </div>
+<div th:replace="~{general :: page-header}"> </div>
 
 <div class="bg-image error-page">
     <div class="container">
@@ -20,9 +20,9 @@
 </div>
 
 <div class="indent">
-    <span th:text="${error_msg}">error</span>
+    <span class="centered" th:text="${error_msg}"></span>
 </div>
 
-<div th:replace="general :: site-footer"></div>
+<div th:replace="~{general :: site-footer}"></div>
 </body>
 </html>

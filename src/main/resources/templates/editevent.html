@@ -8,26 +8,27 @@
 </head>
 <body>
 
-<div th:replace="general :: page-header"></div>
+<div th:replace="~{general :: page-header}"></div>
 
 <div class="indent">
-    <div class="desc">
+    <h1 class="centered">Edit Event</h1>
+    <div class="edit">
         <form th:action="@{/edit_event}" method="post">
             <input type="hidden" name="eventID" th:value="${event.getId()}"/>
-            <input name="title" th:value="${event.getTitle()}" text="Title" placeholder="title"/>
-            <input name="sport" th:value="${event.getSport()}" text="Sport" placeholder="sport"/>
-            <input name="tournament" th:value="${event.getTournament()}" text="Tournament" placeholder="tournament"/>
-            <input name="description" th:value="${event.getDescription()}" text="Description" placeholder="description"/>
-            <input name="venue" th:value="${event.getVenue()}" text="Venue" placeholder="venue"/>
-            <input type="date" name="date" th:value="${event.getDate()}" text="Date" placeholder="date"/>
-            <input name="seats"  th:value="${event.getSeats()?.toString()}" text="Seats" placeholder="seats"/>
-            <input name="results"  th:value="${event.getResults()?.toString()}" text="Results" placeholder="results"/>
-            <input type="submit" value="Submit"/>
+            <input name="title" th:value="${event.getTitle()}" text="Title" placeholder="Title"/>
+            <input name="sport" th:value="${event.getSport()}" text="Sport" placeholder="Sport"/>
+            <input name="tournament" th:value="${event.getTournament()}" text="Tournament" placeholder="Tournament"/>
+            <input name="venue" th:value="${event.getVenue()}" text="Venue" placeholder="Venue"/>
+            <input type="date" name="date" th:value="${event.getDate()}" text="Date" placeholder="Date"/>
+            <input name="seats"  th:value="${event.getSeats()?.toString()}" text="Seats" placeholder="Seats"/>
+            <input name="results"  th:value="${event.getResults()?.toString()}" text="Results" placeholder="Results"/>
+            <textarea name="description" th:value="${event.getDescription()}" text="Description" placeholder="Description" rows="6"></textarea>
+            <input type="submit" class="button searchbtn" value="Submit"/>
         </form>
     </div>
 </div>
 
-<div th:replace="general :: site-footer"></div>
+<div th:replace="~{general :: site-footer}"></div>
 
 </body>
 </html>

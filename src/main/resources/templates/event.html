@@ -8,72 +8,87 @@
 </head>
 <body>
 
-<div th:replace="general :: page-header"></div>
+<div th:replace="~{general :: page-header}"></div>
 
 <div class="indent">
-    <div class="desc">
-        <h4 th:text="${event.getTitle()}"></h4>
+    <div>
+        <div class="container">
+            <h1 th:text="${event.getTitle()}"></h1>
+            <a text="Edit" th:href="'/editevent?eventID=' + ${event.getId()}"  class="button addbtn">Edit</a>
+            <form method="post" action="/delete_event">
+                <input type="hidden" name="eventID" th:value="${event.getId()}"/>
+                <button class="button addbtn delbtn" type="submit">Delete</button>
+            </form>
+        </div>
         <span th:text="${event.getSport()}"></span><br>
         <span th:text="${event.getTournament()}"></span><br>
-        <span th:text="${event.getDescription()}"></span><br>
+        <div class="desc">
+            <span th:text="${event.getDescription()}"></span>
+        </div>
         <span th:text="${event.getVenue()}"></span><br>
         <span th:text="${#temporals.format(event.getDate(), 'dd MMMM yyyy')}"></span>
     </div>
     <div>
-        Participants:<br>
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Country</th>
-                <th></th>
-            </tr>
+        <div class="container">
 
-            <tr th:each="pers, iter: ${e_sportsmen}">
-                <td>
-                    <a th:text="${pers?.getSportsman()?.getName()}" th:href="@{/person(type='sportsman',personID=${pers?.getSportsman()?.getId()})}"></a>
-                </td>
-                <td th:text="${pers?.getSportsman()?.getCountry()}"></td><br>
-                <td>
-                    <a th:text="'delete'" th:href="@{/del_pers_from_event(type='sportsman',eventID=${param.eventID},personID=${pers?.getSportsman()?.getId()})}"></a>
-                </td>
-            </tr>
+            <h2>Participants</h2>
+            <a th:href="'/persons?type=sportsman&eventID=' + ${event.getId()}" class="button addbtn">Add sportsman to event</a>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pers, iter: ${e_sportsmen}">
+                    <td>
+                        <a th:text="${pers?.getSportsman()?.getName()}" th:href="@{/person(type='sportsman',personID=${pers?.getSportsman()?.getId()})}"></a>
+                    </td>
+                    <td th:text="${pers?.getSportsman()?.getCountry()}"></td>
+                    <td>
+                        <a th:text="'delete'" th:href="@{/del_pers_from_event(type='sportsman',eventID=${param.eventID},personID=${pers?.getSportsman()?.getId()})}" class="button"></a>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 
-    <a th:href="'/persons?type=sportsman&eventID=' + ${event.getId()}">Add sportsman to event</a>
 
     <div>
-        Participanting teams:<br>
+        <div class="container">
+            <h2>Participanting teams</h2>
+            <a th:href="'/teams?&eventID=' + ${event.getId()}" class="button addbtn">Add team to event</a>
+        </div>
         <table>
-            <tr>
-                <th>Name</th>
-                <th>Country</th>
-                <th></th>
-            </tr>
-
-            <tr th:each="team, iter: ${e_teams}">
-                <td>
-                    <a th:text="${team?.getTeam()?.getTeamName()}" th:href="@{/team(teamID=${team?.getTeam()?.getId()})}"></a>
-                </td>
-                <td th:text="${team?.getTeam()?.getCountry()}"></td><br>
-                <td>
-                    <a th:text="'delete'" th:href="@{/del_team_from_event(eventID=${param.eventID},teamID=${team?.getTeam()?.getId()})}"></a>
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="team, iter: ${e_teams}">
+                    <td>
+                        <a th:text="${team?.getTeam()?.getTeamName()}" th:href="@{/team(teamID=${team?.getTeam()?.getId()})}"></a>
+                    </td>
+                    <td th:text="${team?.getTeam()?.getCountry()}"></td>
+                    <td>
+                        <a th:text="'delete'" th:href="@{/del_team_from_event(eventID=${param.eventID},teamID=${team?.getTeam()?.getId()})}" class="button"></a>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 
-    <a th:href="'/teams?&eventID=' + ${event.getId()}">Add team to event</a>
 
-    <form method="post" action="/delete_event">
-        <input type="hidden" name="eventID" th:value="${event.getId()}"/>
-        <button id="deleteEventButton" type="submit">Delete</button>
-    </form>
-
-    <a text="Edit" th:href="'/editevent?eventID=' + ${event.getId()}">Edit</a>
 </div>
 
-<div th:replace="general :: site-footer"></div>
+<div th:replace="~{general :: site-footer}"></div>
 
 </body>
 </html>

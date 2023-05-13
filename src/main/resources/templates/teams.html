@@ -8,12 +8,12 @@
 </head>
 <body>
 
-<div th:replace="general :: page-header"></div>
+<div th:replace="~{general :: page-header}"></div>
 
 <div class="indent">
     <h1>Teams</h1>
+    <a th:href="'/addteam'" class="button addbtn">Add team</a>
     <div class="filters">
-        Filters:
         <form action="/teams" method="get">
             <div th:if="${param.eventID != null}">
                 <input name="eventID" type="hidden" th:value="${param.eventID}"/>
@@ -21,42 +21,48 @@
             <div th:if="${param.coachID != null}">
                 <input name="coachID" type="hidden" th:value="${param.coachID}"/>
             </div>
-            <input name="teamname" th:value="${param.teamname}" placeholder="teamname"/>
-            <input name="sport" th:value="${param.sport}" placeholder="sport"/>
-            <input name="country" th:value="${param.country}" placeholder="country"/>
-            <input type="submit" value="Submit"/>
+            <label class="input-label">Name</label>
+            <input name="teamname" th:value="${param.teamname}"/>
+            <label class="input-label">Sport</label>
+            <input name="sport" th:value="${param.sport}"/>
+            <label class="input-label">Country</label>
+            <input name="country" th:value="${param.country}"/>
+            <input type="submit" class="button searchbtn" value="Search"/>
         </form>
     </div>
-    <a th:href="'/addteam'">Add team</a>
 
     <div class="info container">
         <table>
-            <tr>
-                <th>Name</th>
-                <th>Sport</th>
-                <th>Country</th>
-                <th th:if="${param.coachID != null}">Add to coach</th>
-                <th th:if="${param.eventID != null}">Add to event</th>
-            </tr>
-
-            <tr th:each="team, iter: ${teams}">
-                <td>
-                    <a th:text="${team.getTeamName()}" th:href="'/team?teamID=' + ${team.getId()}"></a>
-                </td>
-                <td th:text="${team.getSport()}"></td>
-                <td th:text="${team.getCountry()}"></td>
-                <td th:if="${param.coachID != null}">
-                    <a th:text="'Add'" th:href="@{/add_team_to_coach(coachID=${param.coachID},teamID=${team.getId()})}"></a>
-                </td>
-                <td th:if="${param.eventID != null}">
-                    <a th:text="'Add'" th:href="@{/add_team_to_event(eventID=${param.eventID},teamID=${team.getId()})}"></a>
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Sport</th>
+                    <th>Country</th>
+                    <th th:if="${param.coachID != null}">Add to coach</th>
+                    <th th:if="${param.eventID != null}">Add to event</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="team, iter: ${teams}" th:onclick="'location.href=\'/team?teamID=' + ${team.getId()}+'\''">
+                    <td th:text="${team.getTeamName()}" >
+                    </td>
+                    <td th:text="${team.getSport()}">
+                    </td>
+                    <td th:text="${team.getCountry()}">
+                    </td>
+                    <td th:if="${param.coachID != null}">
+                        <a th:text="'Add'" th:href="@{/add_team_to_coach(coachID=${param.coachID},teamID=${team.getId()})}"></a>
+                    </td>
+                    <td th:if="${param.eventID != null}">
+                        <a th:text="'Add'" th:href="@{/add_team_to_event(eventID=${param.eventID},teamID=${team.getId()})}"></a>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </div>
 
-<div th:replace="general :: site-footer"></div>
+<div th:replace="~{general :: site-footer}"></div>
 
 </body>
 </html>
