@@ -44,13 +44,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr th:each="pers, iter: ${c_sportsmen}">
-          <td>
-            <a th:text="${pers?.getSportsman()?.getName()}" th:href="@{/person(type='sportsman',personID=${pers?.getSportsman()?.getId()})}"></a>
-          </td>
+        <tr th:each="pers, iter: ${c_sportsmen}" th:onclick="|location.href='@{/person(type='sportsman', personID=${pers?.getSportsman()?.getId()})}'|">
+          <td th:text="${pers?.getSportsman()?.getName()}"></td>
           <td th:text="${pers?.getSportsman()?.getCountry()}"></td>
           <td>
-            <a th:text="'delete'" th:href="@{/del_pers_from_coach(coachID=${person.getId()},personID=${pers?.getSportsman()?.getId()})}" class="button"></a>
+            <a th:text="'delete'" th:href="@{/del_pers_from_coach(coachID=${person.getId()},personID=${pers?.getSportsman()?.getId()})}" class="button searchbtn"></a>
           </td>
         </tr>
       </tbody>
@@ -67,13 +65,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr th:each="team, iter: ${c_teams}">
-          <td>
-            <a th:text="${team?.getTeam()?.getTeamName()}" th:href="@{/team(teamID=${team?.getTeam()?.getId()})}"></a>
-          </td>
+        <tr th:each="team, iter: ${c_teams}" th:onclick="|location.href='@{/team(teamID=${team?.getTeam()?.getId()})}'|">
+          <td th:text="${team?.getTeam()?.getTeamName()}"></td>
           <td th:text="${team?.getTeam()?.getCountry()}"></td>
             <td>
-                <a th:text="'delete'" th:href="@{/del_team_from_coach(coachID=${person.getId()},teamID=${team?.getTeam()?.getId()})}" class="button"></a>
+                <a th:text="'delete'" th:href="@{/del_team_from_coach(coachID=${person.getId()},teamID=${team?.getTeam()?.getId()})}" class="button searchbtn"></a>
           </td>
         </tr>
       </tbody>
@@ -89,10 +85,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr th:each="pers, iter: ${c_sportsmen}">
-          <td>
-            <a th:text="${pers?.getCoach()?.getName()}" th:href="@{/person(type='coach',personID=${pers?.getCoach()?.getId()})}" class="button"></a>
-          </td>
+        <tr th:each="pers, iter: ${c_sportsmen}" th:onclick="|location.href='@{/person(type='coach',personID=${pers?.getCoach()?.getId()})}'|">
+          <td th:text="${pers?.getCoach()?.getName()}"></td>
           <td th:text="${pers?.getCoach()?.getCountry()}"></td>
         </tr>
       </tbody>

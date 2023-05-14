@@ -22,7 +22,7 @@
             <input type="date" name="date" th:value="${event.getDate()}" text="Date" placeholder="Date"/>
             <input name="seats"  th:value="${event.getSeats()?.toString()}" text="Seats" placeholder="Seats"/>
             <input name="results"  th:value="${event.getResults()?.toString()}" text="Results" placeholder="Results"/>
-            <textarea name="description" th:value="${event.getDescription()}" text="Description" placeholder="Description" rows="6"></textarea>
+            <textarea name="description" th:text="${event.getDescription()}" text="Description" placeholder="Description" rows="6"></textarea>
             <input type="submit" class="button searchbtn" value="Submit"/>
         </form>
     </div>

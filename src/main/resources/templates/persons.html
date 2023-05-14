@@ -22,6 +22,9 @@
             <div th:if="${param.coachID != null}">
                 <input name="coachID" type="hidden" th:value="${param.coachID}"/>
             </div>
+            <div th:if="${param.teamID != null}">
+                <input name="teamID" type="hidden" th:value="${param.teamID}"/>
+            </div>
             <input name="type" type="hidden" th:value="${param.type}"/>
             <label class="input-label">Name</label>
             <input name="name" th:value="${param.name}"/>
@@ -47,22 +50,20 @@
                 </tr>
             </thead>
             <tbody>
-<!--            th:onclick="'location.href=\'/team?teamID=' + ${team.getId()}+'\''"-->
-                <tr th:each="person, iter: ${persons}" th:onclick="'location.href=\'/person?type=' + ${param.type}+ '&personID='+ ${person.getId()}'\''">
+                <tr th:each="person, iter: ${persons}" th:onclick="|location.href='@{/person(type=${param.type}, personID=${person.getId()})}'|">
                     <td th:text="${person.getName()}">
-<!--                        <a th:text="${person.getName()}" th:href="@{/person(type=${param.type},personID=${person.getId()})}"></a>-->
                     </td>
                     <td th:text="${person.getSport()}"></td>
                     <td th:text="${person.getCountry()}"></td>
                     <td th:text="${#temporals.format(person.getBirthDate(), 'dd MMMM yyyy')}"></td>
                     <td th:if="${param.eventID != null}">
-                        <a th:text="'Add'" th:href="@{/add_pers_to_event(type=${param.type},eventID=${param.eventID},personID=${person.getId()})}"></a>
+                        <a th:text="'Add'" class="button searchbtn" th:href="@{/add_pers_to_event(type=${param.type},eventID=${param.eventID},personID=${person.getId()})}"></a>
                     </td>
                     <td th:if="${param.coachID != null}">
-                        <a th:text="'Add'" th:href="@{/add_pers_to_coach(type=${param.type},coachID=${param.coachID},personID=${person.getId()})}"></a>
+                        <a th:text="'Add'" class="button searchbtn" th:href="@{/add_pers_to_coach(type=${param.type},coachID=${param.coachID},personID=${person.getId()})}"></a>
                     </td>
                     <td th:if="${param.teamID != null}">
-                        <a th:text="'Add'" th:href="@{/add_pers_to_team(type=${param.type},teamID=${param.teamID},personID=${person.getId()})}"></a>
+                        <a th:text="'Add'" class="button searchbtn" th:href="@{/add_pers_to_team(type=${param.type},teamID=${param.teamID},personID=${person.getId()})}"></a>
                     </td>
                 </tr>
             </tbody>

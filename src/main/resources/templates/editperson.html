@@ -20,7 +20,7 @@
       <input name="sport" th:value="${person.getSport()}" text="Sport" placeholder="Sport"/>
       <input name="country" th:value="${person.getCountry()}" text="Country" placeholder="Country"/>
       <input type="date" name="birthdate" th:value="${person.getBirthDate()}" text="Date of birth" placeholder="Date of birth"/>
-      <textarea name="description" th:value="${person.getDescription()}" text="Description" placeholder="Description" rows="6"></textarea>
+      <textarea name="description" th:text="${person.getDescription()}" text="Description" placeholder="Description" rows="6"></textarea>
       <input type="submit" class="button searchbtn" value="Submit"/>
     </form>
   </div>

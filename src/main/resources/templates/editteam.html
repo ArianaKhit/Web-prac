@@ -18,7 +18,7 @@
       <input name="teamname" th:value="${team.getTeamName()}" text="Team Name" placeholder="Team Name"/>
       <input name="sport" th:value="${team.getSport()}" text="Sport" placeholder="Sport"/>
       <input name="country" th:value="${team.getCountry()}" text="Country" placeholder="Country"/>
-      <textarea name="description" th:value="${team.getDescription()}" text="Description" placeholder="Description" rows="6"></textarea>
+      <textarea name="description" th:text="${team.getDescription()}" text="Description" placeholder="Description" rows="6"></textarea>
       <input type="submit" class="button searchbtn" value="Submit"/>
     </form>
   </div>

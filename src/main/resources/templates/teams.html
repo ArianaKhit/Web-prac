@@ -51,10 +51,10 @@
                     <td th:text="${team.getCountry()}">
                     </td>
                     <td th:if="${param.coachID != null}">
-                        <a th:text="'Add'" th:href="@{/add_team_to_coach(coachID=${param.coachID},teamID=${team.getId()})}"></a>
+                        <a th:text="'Add'" th:href="@{/add_team_to_coach(coachID=${param.coachID},teamID=${team.getId()})}" class="button searchbtn"></a>
                     </td>
                     <td th:if="${param.eventID != null}">
-                        <a th:text="'Add'" th:href="@{/add_team_to_event(eventID=${param.eventID},teamID=${team.getId()})}"></a>
+                        <a th:text="'Add'" th:href="@{/add_team_to_event(eventID=${param.eventID},teamID=${team.getId()})}" class="button searchbtn"></a>
                     </td>
                 </tr>
             </tbody>

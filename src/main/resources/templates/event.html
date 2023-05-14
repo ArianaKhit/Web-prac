@@ -44,13 +44,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="pers, iter: ${e_sportsmen}">
-                    <td>
-                        <a th:text="${pers?.getSportsman()?.getName()}" th:href="@{/person(type='sportsman',personID=${pers?.getSportsman()?.getId()})}"></a>
-                    </td>
+                <tr th:each="pers, iter: ${e_sportsmen}" th:onclick="|location.href='@{/person(type='sportsman', personID=${pers?.getSportsman()?.getId()})}'|">
+                    <td th:text="${pers?.getSportsman()?.getName()}"></td>
                     <td th:text="${pers?.getSportsman()?.getCountry()}"></td>
                     <td>
-                        <a th:text="'delete'" th:href="@{/del_pers_from_event(type='sportsman',eventID=${param.eventID},personID=${pers?.getSportsman()?.getId()})}" class="button"></a>
+                        <a th:text="'delete'" th:href="@{/del_pers_from_event(type='sportsman',eventID=${param.eventID},personID=${pers?.getSportsman()?.getId()})}" class="button searchbtn"></a>
                     </td>
                 </tr>
             </tbody>
@@ -72,13 +70,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="team, iter: ${e_teams}">
-                    <td>
-                        <a th:text="${team?.getTeam()?.getTeamName()}" th:href="@{/team(teamID=${team?.getTeam()?.getId()})}"></a>
-                    </td>
+                <tr th:each="team, iter: ${e_teams}" th:onclick="|location.href='@{/team(teamID=${team?.getTeam()?.getId()})}'|">
+                    <td th:text="${team?.getTeam()?.getTeamName()}"></td>
                     <td th:text="${team?.getTeam()?.getCountry()}"></td>
                     <td>
-                        <a th:text="'delete'" th:href="@{/del_team_from_event(eventID=${param.eventID},teamID=${team?.getTeam()?.getId()})}" class="button"></a>
+                        <a th:text="'delete'" th:href="@{/del_team_from_event(eventID=${param.eventID},teamID=${team?.getTeam()?.getId()})}" class="button searchbtn"></a>
                     </td>
                 </tr>
             </tbody>
